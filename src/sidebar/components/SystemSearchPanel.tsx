@@ -1,6 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SystemSearchInput } from './SystemSearchInput';
 import { SystemResultList } from './SystemResultList';
+import { useRecommendationStore } from '@/store';
 import type { Recommendation } from '@/types/Recommendation';
 
 /**
@@ -18,15 +19,10 @@ interface SystemSearchPanelProps {
 }
 
 /**
- * 面板状态类型
- */
-type PanelState = 'idle' | 'loading' | 'success' | 'error';
-
-/**
  * SystemSearchPanel - 系统搜索面板容器
  * 
  * 集成SystemSearchInput和SystemResultList组件，
- * 管理搜索状态（idle/loading/success/error）
+ * 使用Zustand管理全局状态
  * 
  * @example
  * ```tsx
@@ -42,12 +38,26 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
   disabled = false,
   className = '',
 }) => {
-  // ============ 状态管理 ============
-  const [query, setQuery] = useState(initialQuery);
-  const [results, setResults] = useState<Recommendation[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [panelState, setPanelState] = useState<PanelState>('idle');
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  // ============ Zustand State ============
+  const {
+    queryText,
+    results,
+    loading,
+    error,
+    selectedId,
+    setQuery,
+    setResults,
+    setLoading,
+    setError,
+    setSelectedId,
+  } = useRecommendationStore();
+
+  // 初始化查询关键字
+  useEffect(() => {
+    if (initialQuery && !queryText) {
+      setQuery(initialQuery);
+    }
+  }, [initialQuery, queryText, setQuery]);
 
   // ============ 搜索处理 ============
   /**
@@ -55,15 +65,19 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
    * TODO: 后续集成chrome.runtime通信
    */
   const handleSearch = useCallback(async (searchQuery: string) => {
+    // 更新查询文本
+    setQuery(searchQuery);
+
     if (!searchQuery.trim()) {
       setResults([]);
-      setPanelState('idle');
+      setLoading(false);
+      setError(null);
       return;
     }
 
     // 开始加载
-    setPanelState('loading');
-    setErrorMessage('');
+    setLoading(true);
+    setError(null);
 
     try {
       // TODO: 调用chrome.runtime.sendMessage与Background通信
@@ -120,14 +134,12 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
       ];
 
       setResults(mockResults);
-      setPanelState('success');
     } catch (error) {
       console.error('搜索失败:', error);
-      setErrorMessage('网络不稳定，已切换到基础搜索');
-      setPanelState('error');
+      setError('网络不稳定，已切换到基础搜索');
       setResults([]);
     }
-  }, []);
+  }, [setQuery, setResults, setLoading, setError]);
 
   // ============ 选择处理 ============
   /**
@@ -136,35 +148,39 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
   const handleSelect = useCallback((recommendation: Recommendation) => {
     setSelectedId(recommendation.id);
     onSelectSystem?.(recommendation);
-  }, [onSelectSystem]);
+  }, [onSelectSystem, setSelectedId]);
 
   // ============ 重试处理 ============
   /**
    * 重试搜索
    */
   const handleRetry = useCallback(() => {
-    handleSearch(query);
-  }, [query, handleSearch]);
+    handleSearch(queryText);
+  }, [queryText, handleSearch]);
 
   // ============ 键盘事件 ============
   /**
    * 处理ESC键清空搜索
    */
+  const reset = useRecommendationStore(state => state.reset);
+  
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setQuery('');
-        setResults([]);
-        setPanelState('idle');
-        setSelectedId(null);
+        reset();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [reset]);
 
   // ============ 渲染 ============
+  // 计算显示状态
+  const isLoading = loading;
+  const hasError = error !== null;
+  const isEmpty = !isLoading && !hasError && results.length === 0 && queryText.trim() === '';
+  
   return (
     <div
       className={`
@@ -176,19 +192,19 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
     >
       {/* 搜索输入框 */}
       <SystemSearchInput
-        value={query}
+        value={queryText}
         onSearch={handleSearch}
         placeholder="搜索ITSM系统..."
         disabled={disabled}
-        loading={panelState === 'loading'}
+        loading={isLoading}
       />
 
       {/* 错误提示 */}
-      {panelState === 'error' && (
+      {hasError && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-red-600">⚠️</span>
-            <span className="text-sm text-red-800">{errorMessage}</span>
+            <span className="text-sm text-red-800">{error}</span>
           </div>
           <button
             onClick={handleRetry}
@@ -201,7 +217,7 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
       )}
 
       {/* 加载状态 */}
-      {panelState === 'loading' && (
+      {isLoading && (
         <div className="flex items-center justify-center py-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           <span className="ml-3 text-sm text-gray-600">搜索中...</span>
@@ -209,7 +225,7 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
       )}
 
       {/* 结果列表 */}
-      {(panelState === 'success' || panelState === 'idle') && (
+      {!isLoading && !hasError && (
         <SystemResultList
           results={results}
           onSelect={handleSelect}
@@ -219,7 +235,7 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
       )}
 
       {/* 空状态提示 */}
-      {panelState === 'idle' && results.length === 0 && query.trim() === '' && (
+      {isEmpty && (
         <div className="text-center py-8 text-gray-400">
           <div className="text-4xl mb-2">🔍</div>
           <div className="text-sm">输入关键字开始搜索</div>

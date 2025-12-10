@@ -4,6 +4,7 @@
 
 /** 消息类型枚举 */
 export enum MessageType {
+  PING = 'PING',
   SEARCH_SYSTEM = 'SEARCH_SYSTEM',
   FILL_SYSTEM = 'FILL_SYSTEM',
   GET_CURRENT_SYSTEM = 'GET_CURRENT_SYSTEM',

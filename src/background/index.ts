@@ -17,12 +17,50 @@ chrome.action.onClicked.addListener((tab) => {
 
 // 监听来自Sidebar的消息
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
-  console.log('Background received message:', request);
+  console.log('[Background] Received message:', request);
   
-  if (request.type === 'SEARCH_SYSTEM') {
-    // TODO: 实现系统搜索逻辑
-    sendResponse({ success: true, results: [] });
+  // PING检查
+  if (request.type === 'PING') {
+    sendResponse({ success: true, data: 'pong' });
+    return true;
   }
   
-  return true; // 保持消息通道开放
+  // 搜索系统
+  if (request.type === 'SEARCH_SYSTEM') {
+    const query = request.payload?.query || '';
+    console.log('[Background] Search query:', query);
+    
+    // TODO: 实际搜索逻辑（规则引擎 + AI增强）
+    // 现在返回Mock数据
+    setTimeout(() => {
+      const mockResults = [
+        {
+          id: `rec-bg-1-${Date.now()}`,
+          system: {
+            id: 'sys-bg-001',
+            name: `${query}系统（Background）`,
+            category: '搜索结果',
+            responsibility: 'IT部',
+            keywords: [query],
+            pinyin: 'background',
+          },
+          confidence: 0.95,
+          reason: 'Background规则引擎匹配',
+          source: 'rule',
+          timestamp: Date.now(),
+        },
+      ];
+      
+      sendResponse({
+        success: true,
+        data: { results: mockResults },
+      });
+    }, 300);
+    
+    return true; // 异步响应
+  }
+  
+  // 未知消息类型
+  sendResponse({ success: false, error: '未知消息类型' });
+  return true;
 });

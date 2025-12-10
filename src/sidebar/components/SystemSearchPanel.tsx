@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { SystemSearchInput } from './SystemSearchInput';
 import { SystemResultList } from './SystemResultList';
 import { useRecommendationStore } from '@/store';
+import { searchSystem } from '@/utils';
 import type { Recommendation } from '@/types/Recommendation';
 
 /**
@@ -62,7 +63,8 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
   // ============ 搜索处理 ============
   /**
    * 处理搜索请求
-   * TODO: 后续集成chrome.runtime通信
+   * 使用chrome.runtime与Background通信
+   * 通信失败时降级到Mock数据
    */
   const handleSearch = useCallback(async (searchQuery: string) => {
     // 更新查询文本
@@ -80,11 +82,13 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
     setError(null);
 
     try {
-      // TODO: 调用chrome.runtime.sendMessage与Background通信
-      // 现在使用Mock数据模拟
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-      // Mock数据
+      // 调用chrome.runtime.sendMessage与Background通信
+      const results = await searchSystem(searchQuery, 5000);
+      setResults(results);
+    } catch (error) {
+      console.error('[Sidebar] 搜索失败，使用Mock数据降级:', error);
+      
+      // 降级到Mock数据
       const mockResults: Recommendation[] = [
         {
           id: 'rec-1',
@@ -133,11 +137,9 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
         },
       ];
 
+      // 设置降级数据，并显示警告
       setResults(mockResults);
-    } catch (error) {
-      console.error('搜索失败:', error);
-      setError('网络不稳定，已切换到基础搜索');
-      setResults([]);
+      setError('后台服务未响应，使用本地数据');
     }
   }, [setQuery, setResults, setLoading, setError]);
 
@@ -184,7 +186,8 @@ export const SystemSearchPanel: React.FC<SystemSearchPanelProps> = ({
   return (
     <div
       className={`
-        w-[400px] p-4 m-2
+        w-full max-w-[400px] xl:max-w-[400px] lg:max-w-[350px]
+        p-4 mx-auto
         bg-white rounded-lg shadow-md
         flex flex-col gap-4
         ${className}

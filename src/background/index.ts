@@ -6,6 +6,15 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log('ITSM Assistant Extension installed');
 });
 
+// 监听扩展图标点击事件，打开侧边栏
+chrome.action.onClicked.addListener((tab) => {
+  if (tab.id) {
+    chrome.sidePanel.open({ tabId: tab.id }).catch((error) => {
+      console.error('Failed to open side panel:', error);
+    });
+  }
+});
+
 // 监听来自Sidebar的消息
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   console.log('Background received message:', request);

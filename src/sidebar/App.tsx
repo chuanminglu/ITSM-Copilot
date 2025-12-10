@@ -1,4 +1,19 @@
+import { useState } from 'react';
+import { SystemSearchInput } from './components';
+
 function App() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loading] = useState(false); // TODO: 实际搜索时设置loading状态
+
+  /**
+   * 处理搜索 (防抖后触发)
+   */
+  const handleSearch = (query: string) => {
+    console.log('[Sidebar] Search query:', query);
+    setSearchQuery(query);
+    // TODO: 调用Background进行实际搜索
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Header */}
@@ -18,14 +33,12 @@ function App() {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             搜索ITSM系统
           </label>
-          <input
-            type="text"
-            placeholder="输入系统名称、关键词或拼音..."
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+          <SystemSearchInput
+            value={searchQuery}
+            onSearch={handleSearch}
+            loading={loading}
+            placeholder="搜索系统（支持中文/拼音）"
           />
-          <p className="text-xs text-gray-500 mt-2">
-            支持中文、拼音、英文搜索，如"客户"、"kehu"、"CRM"
-          </p>
         </section>
 
         {/* Results Section */}

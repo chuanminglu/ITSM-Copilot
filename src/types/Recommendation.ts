@@ -1,9 +1,11 @@
+import { System } from './System';
+
 /**
  * 系统推荐结果类型定义
  */
 export interface Recommendation {
   /** 推荐的系统 */
-  system: string;
+  system: System;
   
   /** 置信度（0-1之间） */
   confidence: number;

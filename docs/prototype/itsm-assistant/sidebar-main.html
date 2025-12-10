@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITSM需求助手 - 侧边栏主界面</title>
+    <style>
+        /* ========== 全局样式 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #262626;
+            background: #f0f2f5;
+        }
+
+        /* ========== 侧边栏容器 ========== */
+        .sidebar {
+            width: 380px;
+            height: 100vh;
+            overflow-y: auto;
+            background: #f5f5f5;
+            padding: 16px;
+        }
+
+        /* ========== 顶部导航 ========== */
+        .header {
+            background: #ffffff;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1890ff;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #e6f7ff;
+            color: #1890ff;
+        }
+
+        /* ========== 区块容器 ========== */
+        .section {
+            background: #ffffff;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #262626;
+        }
+
+        /* ========== 系统选择区域 ========== */
+        .search-box {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #1890ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+        }
+
+        .system-selected {
+            padding: 12px;
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 4px;
+            color: #1890ff;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .system-selected.active {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .link-button {
+            color: #1890ff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: underline;
+            padding: 0;
+        }
+
+        .link-button:hover {
+            color: #40a9ff;
+        }
+
+        .confidence-selector {
+            display: none;
+            margin-top: 12px;
+            padding: 12px;
+            background: #fff7e6;
+            border: 1px solid #ffd591;
+            border-radius: 4px;
+        }
+
+        .confidence-selector.active {
+            display: block;
+        }
+
+        .confidence-label {
+            font-size: 13px;
+            color: #8c8c8c;
+            margin-bottom: 8px;
+        }
+
+        .confidence-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .confidence-btn {
+            flex: 1;
+            padding: 6px 12px;
+            border: 1px solid #d9d9d9;
+            background: #ffffff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .confidence-btn:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+
+        .confidence-btn.selected {
+            background: #1890ff;
+            color: #ffffff;
+            border-color: #1890ff;
+        }
+
+        /* ========== 模板推荐区域 ========== */
+        .template-card {
+            padding: 12px;
+            background: #fff7e6;
+            border: 1px solid #ffd591;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .template-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .template-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #262626;
+        }
+
+        .template-confidence {
+            font-size: 12px;
+            color: #fa8c16;
+        }
+
+        .template-reason {
+            font-size: 13px;
+            color: #8c8c8c;
+            margin-bottom: 8px;
+        }
+
+        .template-apply-btn {
+            width: 100%;
+            padding: 6px;
+            background: #1890ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .template-apply-btn:hover {
+            background: #40a9ff;
+        }
+
+        .template-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .template-tab {
+            padding: 6px 16px;
+            border: 1px solid #d9d9d9;
+            background: #ffffff;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .template-tab:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+
+        .template-tab.active {
+            background: #1890ff;
+            color: #ffffff;
+            border-color: #1890ff;
+        }
+
+        /* ========== 表单字段区域 ========== */
+        .form-field {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #262626;
+        }
+
+        .required {
+            color: #f5222d;
+            margin-right: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #1890ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #f5222d;
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #8c8c8c;
+            margin-top: 4px;
+        }
+
+        .form-error {
+            font-size: 12px;
+            color: #f5222d;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .form-error.active {
+            display: block;
+        }
+
+        .example-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #1890ff;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .example-link:hover {
+            color: #40a9ff;
+        }
+
+        /* ========== 质量评分区域 ========== */
+        .quality-card {
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .quality-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .quality-score {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .quality-stars {
+            font-size: 18px;
+        }
+
+        .quality-progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .quality-progress-bar {
+            height: 100%;
+            background: #ffffff;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .quality-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .quality-details {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
+        }
+
+        .quality-details.active {
+            display: block;
+        }
+
+        .quality-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .quality-item-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            margin: 0 12px;
+            overflow: hidden;
+        }
+
+        .quality-item-fill {
+            height: 100%;
+            background: #ffffff;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .toggle-details {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .toggle-details:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* ========== 操作按钮区域 ========== */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            padding: 10px;
+            background: #1890ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #40a9ff;
+            box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: #d9d9d9;
+            cursor: not-allowed;
+        }
+
+        .btn-primary.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .btn-primary.loading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            margin: -8px 0 0 -8px;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            background: #ffffff;
+            color: #262626;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+
+        /* ========== 提示消息 ========== */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.active {
+            display: flex;
+        }
+
+        .toast.success {
+            border-left: 4px solid #52c41a;
+        }
+
+        .toast.error {
+            border-left: 4px solid #f5222d;
+        }
+
+        .toast.warning {
+            border-left: 4px solid #faad14;
+        }
+
+        .toast-icon {
+            font-size: 18px;
+        }
+
+        .toast.success .toast-icon {
+            color: #52c41a;
+        }
+
+        .toast.error .toast-icon {
+            color: #f5222d;
+        }
+
+        .toast.warning .toast-icon {
+            color: #faad14;
+        }
+
+        /* ========== 警告对话框 ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #ffffff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #262626;
+        }
+
+        .modal-content {
+            font-size: 14px;
+            color: #595959;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .missing-list {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .missing-list li {
+            color: #f5222d;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <!-- 顶部导航 -->
+        <div class="header">
+            <div class="header-title">📋 ITSM需求助手</div>
+            <div class="header-actions">
+                <button class="icon-btn" title="历史记录" onclick="showToast('功能开发中', 'warning')">📜</button>
+                <button class="icon-btn" title="草稿" onclick="showToast('功能开发中', 'warning')">💾</button>
+                <button class="icon-btn" title="设置" onclick="showToast('功能开发中', 'warning')">⚙️</button>
+            </div>
+        </div>
+
+        <!-- 系统选择区域 -->
+        <div class="section" id="systemSection">
+            <div class="section-title">1️⃣ 选择目标系统</div>
+            
+            <!-- 搜索框 -->
+            <input 
+                type="text" 
+                class="search-box" 
+                id="systemSearch" 
+                placeholder="🔍 搜索系统（支持拼音）例如：CRM、khgl"
+                oninput="handleSystemSearch()"
+            />
+            
+            <!-- 已选择系统 -->
+            <div class="system-selected" id="systemSelected">
+                <span id="selectedSystemName">✅ 已选择：CRM客户管理系统</span>
+                <button class="link-button" onclick="clearSystemSelection()">重新选择</button>
+            </div>
+            
+            <!-- 分类导航链接 -->
+            <button class="link-button" onclick="window.location.href='page-category.html'">
+                📂 不确定？浏览分类
+            </button>
+            
+            <!-- 信心度选择 -->
+            <div class="confidence-selector" id="confidenceSelector">
+                <div class="confidence-label">您对这个选择有多确定？</div>
+                <div class="confidence-buttons">
+                    <button class="confidence-btn" onclick="selectConfidence('uncertain')">不确定</button>
+                    <button class="confidence-btn" onclick="selectConfidence('normal')">一般</button>
+                    <button class="confidence-btn" onclick="selectConfidence('certain')">确定</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模板推荐区域 -->
+        <div class="section" id="templateSection">
+            <div class="section-title">2️⃣ 需求类型</div>
+            
+            <!-- 智能推荐卡片 -->
+            <div class="template-card" id="templateRecommend" style="display: none;">
+                <div class="template-header">
+                    <div class="template-title">💡 推荐：Bug反馈模板</div>
+                    <div class="template-confidence">置信度 85%</div>
+                </div>
+                <div class="template-reason" id="recommendReason">
+                    检测到关键词"慢"，推荐使用Bug反馈模板
+                </div>
+                <button class="template-apply-btn" onclick="applyTemplate('bug')">应用此模板</button>
+            </div>
+            
+            <!-- 手动选择标签 -->
+            <div class="template-tabs">
+                <button class="template-tab active" data-template="bug" onclick="switchTemplate('bug')">
+                    🐛 Bug反馈
+                </button>
+                <button class="template-tab" data-template="optimize" onclick="switchTemplate('optimize')">
+                    ⚡ 功能优化
+                </button>
+                <button class="template-tab" data-template="feature" onclick="switchTemplate('feature')">
+                    ✨ 新功能
+                </button>
+            </div>
+        </div>
+
+        <!-- 结构化表单区域 -->
+        <div class="section" id="formSection">
+            <div class="section-title">3️⃣ 填写需求内容</div>
+            
+            <!-- 需求标题 -->
+            <div class="form-field">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    需求标题
+                </label>
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    id="requirementTitle"
+                    placeholder="例如：CRM客户查询响应很慢"
+                    oninput="handleTitleInput()"
+                    maxlength="100"
+                />
+                <div class="form-hint">简明扼要，10-100字</div>
+                <div class="form-error" id="titleError">标题长度需要10-100字</div>
+            </div>
+            
+            <!-- 需求背景 -->
+            <div class="form-field">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    需求背景
+                </label>
+                <textarea 
+                    class="form-input form-textarea" 
+                    id="requirementBackground"
+                    placeholder="为什么要做？遇到了什么问题？影响范围有多大？
+例如：客服团队反馈，在CRM系统查询客户信息时，页面加载时间超过10秒，影响100+客服日常工作效率。"
+                    oninput="handleContentChange()"
+                ></textarea>
+                <div class="form-hint">描述问题背景和影响，建议50-500字</div>
+                <div class="form-error" id="backgroundError">背景描述不能少于50字</div>
+            </div>
+            
+            <!-- 需求目标 -->
+            <div class="form-field">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    需求目标
+                </label>
+                <textarea 
+                    class="form-input form-textarea" 
+                    id="requirementGoal"
+                    placeholder="做了之后要达到什么效果？有什么具体指标？
+例如：优化查询性能，将客户信息查询响应时间从10秒降低到3秒以内，提升客服工作效率。"
+                    oninput="handleContentChange()"
+                ></textarea>
+                <div class="form-hint">明确预期效果和量化指标，建议20-300字</div>
+                <div class="form-error" id="goalError">目标描述不能少于20字</div>
+            </div>
+            
+            <!-- 使用场景 -->
+            <div class="form-field">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    使用场景
+                </label>
+                <textarea 
+                    class="form-input form-textarea" 
+                    id="requirementScenario"
+                    placeholder="谁在什么时候会用到？典型操作步骤是什么？
+例如：客服人员在接听客户电话时，需要快速查询客户历史订单、投诉记录等信息，每天操作频率约50次/人。"
+                    oninput="handleContentChange()"
+                ></textarea>
+                <div class="form-hint">描述典型使用场景和频次，建议30-400字</div>
+                <div class="form-error" id="scenarioError">场景描述不能少于30字</div>
+            </div>
+            
+            <!-- 验收标准 -->
+            <div class="form-field">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    验收标准
+                </label>
+                <textarea 
+                    class="form-input form-textarea" 
+                    id="requirementAcceptance"
+                    placeholder="怎么判断问题解决了？有什么具体的验收条件？
+例如：
+1. 客户信息查询响应时间P95 < 3秒
+2. 在1000条数据下仍能保持性能
+3. 无新增Bug，不影响现有功能"
+                    oninput="handleContentChange()"
+                ></textarea>
+                <div class="form-hint">明确验收条件和测试标准，建议20-300字</div>
+                <div class="form-error" id="acceptanceError">验收标准不能少于20字</div>
+            </div>
+            
+            <!-- 查看示例链接 -->
+            <div class="example-link" onclick="window.location.href='page-examples.html'">
+                📚 查看优秀需求示例
+            </div>
+        </div>
+
+        <!-- 质量评分区域 -->
+        <div class="quality-card" id="qualityCard">
+            <div class="quality-header">
+                <div>
+                    <div class="quality-score" id="qualityScore">0</div>
+                    <div class="quality-label">需求质量评分</div>
+                </div>
+                <div class="quality-stars" id="qualityStars">☆☆☆☆☆</div>
+            </div>
+            <div class="quality-progress">
+                <div class="quality-progress-bar" id="qualityProgressBar" style="width: 0%"></div>
+            </div>
+            <button class="toggle-details" onclick="toggleQualityDetails()">
+                查看评分详情
+            </button>
+            
+            <div class="quality-details" id="qualityDetails">
+                <div class="quality-item">
+                    <span>完整性</span>
+                    <div class="quality-item-bar">
+                        <div class="quality-item-fill" id="scoreComplete" style="width: 0%"></div>
+                    </div>
+                    <span id="scoreCompleteText">0/25</span>
+                </div>
+                <div class="quality-item">
+                    <span>字数</span>
+                    <div class="quality-item-bar">
+                        <div class="quality-item-fill" id="scoreWordCount" style="width: 0%"></div>
+                    </div>
+                    <span id="scoreWordCountText">0/30</span>
+                </div>
+                <div class="quality-item">
+                    <span>关键词</span>
+                    <div class="quality-item-bar">
+                        <div class="quality-item-fill" id="scoreKeyword" style="width: 0%"></div>
+                    </div>
+                    <span id="scoreKeywordText">0/20</span>
+                </div>
+                <div class="quality-item">
+                    <span>场景描述</span>
+                    <div class="quality-item-bar">
+                        <div class="quality-item-fill" id="scoreScenario" style="width: 0%"></div>
+                    </div>
+                    <span id="scoreScenarioText">0/15</span>
+                </div>
+                <div class="quality-item">
+                    <span>验收标准</span>
+                    <div class="quality-item-bar">
+                        <div class="quality-item-fill" id="scoreAcceptance" style="width: 0%"></div>
+                    </div>
+                    <span id="scoreAcceptanceText">0/10</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作按钮区域 -->
+        <div class="section">
+            <div class="action-buttons">
+                <button class="btn-secondary" onclick="resetForm()">重置</button>
+                <button class="btn-primary" id="submitBtn" onclick="handleSubmit()">
+                    填充到ITSM
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <!-- 警告对话框 -->
+    <div class="modal-overlay" id="warningModal">
+        <div class="modal">
+            <div class="modal-title">⚠️ 需求质量偏低</div>
+            <div class="modal-content">
+                <p>当前需求质量评分：<strong id="modalScore">45</strong>分</p>
+                <p>检测到以下问题：</p>
+                <ul class="missing-list" id="missingList">
+                    <li>需求背景字数不足</li>
+                    <li>缺少量化指标</li>
+                </ul>
+                <p>建议补充完整后再提交，这样能提高需求被理解和实现的概率。</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeWarningModal()">返回修改</button>
+                <button class="btn-primary" onclick="forceSubmit()">强制填充</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== 全局状态 ==========
+        const state = {
+            selectedSystem: null,
+            confidence: null,
+            currentTemplate: 'bug',
+            formData: {
+                title: '',
+                background: '',
+                goal: '',
+                scenario: '',
+                acceptance: ''
+            },
+            qualityScore: 0,
+            qualityDetails: {
+                complete: 0,
+                wordCount: 0,
+                keyword: 0,
+                scenario: 0,
+                acceptance: 0
+            }
+        };
+
+        // 模拟系统数据库
+        const systemDatabase = [
+            { id: 'SYS001', name: 'CRM客户管理系统', pinyin: 'khgl', category: '客户类' },
+            { id: 'SYS002', name: '计费系统', pinyin: 'jfxt', category: '计费类' },
+            { id: 'SYS003', name: '网络监控平台', pinyin: 'wljkpt', category: '网络类' }
+        ];
+
+        // ========== 系统选择功能 ==========
+        let searchTimeout;
+        function handleSystemSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const keyword = document.getElementById('systemSearch').value.toLowerCase();
+                if (keyword.length > 0) {
+                    // 模拟搜索（实际应展示下拉列表）
+                    if (keyword.includes('crm') || keyword.includes('khgl')) {
+                        selectSystem('SYS001', 'CRM客户管理系统');
+                    }
+                }
+            }, 200);
+        }
+
+        function selectSystem(id, name) {
+            state.selectedSystem = { id, name };
+            document.getElementById('selectedSystemName').textContent = `✅ 已选择：${name}`;
+            document.getElementById('systemSelected').classList.add('active');
+            document.getElementById('confidenceSelector').classList.add('active');
+            document.getElementById('systemSearch').value = '';
+        }
+
+        function clearSystemSelection() {
+            state.selectedSystem = null;
+            state.confidence = null;
+            document.getElementById('systemSelected').classList.remove('active');
+            document.getElementById('confidenceSelector').classList.remove('active');
+            document.querySelectorAll('.confidence-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+        }
+
+        function selectConfidence(level) {
+            state.confidence = level;
+            document.querySelectorAll('.confidence-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            if (level === 'uncertain') {
+                showToast('建议浏览系统分类，或查看系统功能说明', 'warning');
+            } else {
+                showToast('已记录您的选择', 'success');
+                // 自动滚动到模板区
+                document.getElementById('templateSection').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // ========== 模板推荐功能 ==========
+        let titleTimeout;
+        function handleTitleInput() {
+            const title = document.getElementById('requirementTitle').value;
+            state.formData.title = title;
+            
+            // 标题验证
+            if (title.length > 0 && title.length < 10) {
+                document.getElementById('titleError').classList.add('active');
+                document.getElementById('requirementTitle').classList.add('error');
+            } else {
+                document.getElementById('titleError').classList.remove('active');
+                document.getElementById('requirementTitle').classList.remove('error');
+            }
+            
+            // 智能推荐（防抖）
+            clearTimeout(titleTimeout);
+            titleTimeout = setTimeout(() => {
+                const bugKeywords = ['慢', '卡', '报错', '失败', '异常', '问题', 'bug'];
+                const optimizeKeywords = ['优化', '改进', '提升', '降低'];
+                const featureKeywords = ['新增', '增加', '开发', '功能'];
+                
+                let recommendType = null;
+                let confidence = 0;
+                let reason = '';
+                
+                if (bugKeywords.some(kw => title.includes(kw))) {
+                    recommendType = 'bug';
+                    confidence = 85;
+                    reason = `检测到关键词"${bugKeywords.find(kw => title.includes(kw))}"，推荐使用Bug反馈模板`;
+                } else if (optimizeKeywords.some(kw => title.includes(kw))) {
+                    recommendType = 'optimize';
+                    confidence = 78;
+                    reason = `检测到关键词"${optimizeKeywords.find(kw => title.includes(kw))}"，推荐使用功能优化模板`;
+                } else if (featureKeywords.some(kw => title.includes(kw))) {
+                    recommendType = 'feature';
+                    confidence = 72;
+                    reason = `检测到关键词"${featureKeywords.find(kw => title.includes(kw))}"，推荐使用新功能模板`;
+                }
+                
+                if (recommendType && confidence >= 70) {
+                    document.getElementById('templateRecommend').style.display = 'block';
+                    document.getElementById('recommendReason').textContent = reason;
+                    document.querySelector('.template-confidence').textContent = `置信度 ${confidence}%`;
+                }
+            }, 300);
+            
+            calculateQuality();
+        }
+
+        function switchTemplate(type) {
+            state.currentTemplate = type;
+            document.querySelectorAll('.template-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const templates = {
+                bug: '🐛 Bug反馈',
+                optimize: '⚡ 功能优化',
+                feature: '✨ 新功能'
+            };
+            showToast(`已切换到"${templates[type]}"模板`, 'success');
+        }
+
+        function applyTemplate(type) {
+            switchTemplate(type);
+            document.getElementById('templateRecommend').style.display = 'none';
+            document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ========== 表单内容变化处理 ==========
+        let contentTimeout;
+        function handleContentChange() {
+            state.formData.background = document.getElementById('requirementBackground').value;
+            state.formData.goal = document.getElementById('requirementGoal').value;
+            state.formData.scenario = document.getElementById('requirementScenario').value;
+            state.formData.acceptance = document.getElementById('requirementAcceptance').value;
+            
+            // 字段验证
+            validateField('background', 50);
+            validateField('goal', 20);
+            validateField('scenario', 30);
+            validateField('acceptance', 20);
+            
+            // 实时质量检测（防抖）
+            clearTimeout(contentTimeout);
+            contentTimeout = setTimeout(() => {
+                calculateQuality();
+            }, 500);
+        }
+
+        function validateField(fieldName, minLength) {
+            const value = state.formData[fieldName];
+            const errorEl = document.getElementById(`${fieldName}Error`);
+            const inputEl = document.getElementById(`requirement${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`);
+            
+            if (value.length > 0 && value.length < minLength) {
+                errorEl.classList.add('active');
+                inputEl.classList.add('error');
+            } else {
+                errorEl.classList.remove('active');
+                inputEl.classList.remove('error');
+            }
+        }
+
+        // ========== 质量评分计算 ==========
+        function calculateQuality() {
+            let totalScore = 0;
+            const details = { complete: 0, wordCount: 0, keyword: 0, scenario: 0, acceptance: 0 };
+            
+            // 1. 完整性评分（25分）
+            const filledFields = [
+                state.formData.title,
+                state.formData.background,
+                state.formData.goal,
+                state.formData.scenario,
+                state.formData.acceptance
+            ].filter(f => f.trim().length > 0).length;
+            
+            const completeScores = { 5: 25, 4: 20, 3: 12, 2: 6, 1: 2, 0: 0 };
+            details.complete = completeScores[filledFields] || 0;
+            
+            // 2. 字数评分（30分）
+            const wordCounts = {
+                background: Math.min(state.formData.background.length * 0.6, 30),
+                goal: Math.min(state.formData.goal.length * 1.25, 25),
+                scenario: Math.min(state.formData.scenario.length * 0.83, 25),
+                acceptance: Math.min(state.formData.acceptance.length, 20)
+            };
+            details.wordCount = Math.round(Object.values(wordCounts).reduce((a, b) => a + b, 0) * 0.3);
+            
+            // 3. 关键词评分（20分）
+            const allText = Object.values(state.formData).join(' ');
+            let keywordScore = 0;
+            if (/客服|用户|客户|员工|管理员/.test(allText)) keywordScore += 5;
+            if (/\d+[秒分钟小时天]|\d+%|P\d+/.test(allText)) keywordScore += 5;
+            if (/卡顿|慢|报错|失败|异常|问题/.test(allText)) keywordScore += 5;
+            if (/提升|降低|优化|改进|增加|减少/.test(allText)) keywordScore += 5;
+            details.keyword = keywordScore;
+            
+            // 4. 场景描述评分（15分）
+            const scenarioText = state.formData.scenario;
+            let scenarioScore = 0;
+            if (scenarioText.length >= 30) scenarioScore += 5;
+            if (/谁|什么时候|频率|次数/.test(scenarioText)) scenarioScore += 5;
+            if (/\d+/.test(scenarioText)) scenarioScore += 5;
+            details.scenario = scenarioScore;
+            
+            // 5. 验收标准评分（10分）
+            const acceptanceText = state.formData.acceptance;
+            let acceptanceScore = 0;
+            if (acceptanceText.length >= 20) acceptanceScore += 3;
+            if (/\d+/.test(acceptanceText)) acceptanceScore += 4;
+            if (/1\.|2\.|3\./.test(acceptanceText)) acceptanceScore += 3;
+            details.acceptance = acceptanceScore;
+            
+            // 总分
+            totalScore = details.complete + details.wordCount + details.keyword + details.scenario + details.acceptance;
+            totalScore = Math.min(Math.round(totalScore), 100);
+            
+            state.qualityScore = totalScore;
+            state.qualityDetails = details;
+            
+            updateQualityDisplay();
+        }
+
+        function updateQualityDisplay() {
+            const score = state.qualityScore;
+            
+            // 更新分数
+            document.getElementById('qualityScore').textContent = score;
+            document.getElementById('qualityProgressBar').style.width = score + '%';
+            
+            // 更新星级
+            const stars = Math.round(score / 20);
+            document.getElementById('qualityStars').textContent = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+            
+            // 更新颜色
+            const card = document.getElementById('qualityCard');
+            if (score >= 80) {
+                card.style.background = 'linear-gradient(135deg, #52c41a 0%, #389e0d 100%)';
+            } else if (score >= 60) {
+                card.style.background = 'linear-gradient(135deg, #faad14 0%, #d48806 100%)';
+            } else {
+                card.style.background = 'linear-gradient(135deg, #f5222d 0%, #cf1322 100%)';
+            }
+            
+            // 更新详情
+            const details = state.qualityDetails;
+            updateDetailBar('scoreComplete', details.complete, 25);
+            updateDetailBar('scoreWordCount', details.wordCount, 30);
+            updateDetailBar('scoreKeyword', details.keyword, 20);
+            updateDetailBar('scoreScenario', details.scenario, 15);
+            updateDetailBar('scoreAcceptance', details.acceptance, 10);
+        }
+
+        function updateDetailBar(id, score, maxScore) {
+            const percent = (score / maxScore) * 100;
+            document.getElementById(id).style.width = percent + '%';
+            document.getElementById(id + 'Text').textContent = `${score}/${maxScore}`;
+        }
+
+        function toggleQualityDetails() {
+            const details = document.getElementById('qualityDetails');
+            details.classList.toggle('active');
+            event.target.textContent = details.classList.contains('active') ? '收起详情' : '查看评分详情';
+        }
+
+        // ========== 提交处理 ==========
+        function handleSubmit() {
+            // 检查必填项
+            if (!state.selectedSystem) {
+                showToast('请先选择目标系统', 'error');
+                return;
+            }
+            
+            if (!state.formData.title || state.formData.title.length < 10) {
+                showToast('请填写需求标题（至少10字）', 'error');
+                return;
+            }
+            
+            // 质量检查
+            if (state.qualityScore < 60) {
+                showWarningModal();
+                return;
+            }
+            
+            // 执行填充
+            doSubmit();
+        }
+
+        function showWarningModal() {
+            const missingItems = [];
+            if (state.formData.background.length < 50) missingItems.push('需求背景字数不足（需要≥50字）');
+            if (state.formData.goal.length < 20) missingItems.push('需求目标字数不足（需要≥20字）');
+            if (state.formData.scenario.length < 30) missingItems.push('使用场景字数不足（需要≥30字）');
+            if (state.formData.acceptance.length < 20) missingItems.push('验收标准字数不足（需要≥20字）');
+            if (!/\d+/.test(state.formData.goal)) missingItems.push('缺少量化指标');
+            
+            document.getElementById('modalScore').textContent = state.qualityScore;
+            document.getElementById('missingList').innerHTML = missingItems.map(item => `<li>${item}</li>`).join('');
+            document.getElementById('warningModal').classList.add('active');
+        }
+
+        function closeWarningModal() {
+            document.getElementById('warningModal').classList.remove('active');
+        }
+
+        function forceSubmit() {
+            closeWarningModal();
+            doSubmit();
+        }
+
+        function doSubmit() {
+            const btn = document.getElementById('submitBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                // 模拟填充到ITSM
+                const markdown = `
+【需求背景】
+${state.formData.background}
+
+【需求目标】
+${state.formData.goal}
+
+【使用场景】
+${state.formData.scenario}
+
+【验收标准】
+${state.formData.acceptance}
+                `.trim();
+                
+                console.log('填充内容：', {
+                    system: state.selectedSystem,
+                    title: state.formData.title,
+                    description: markdown
+                });
+                
+                // 保存到localStorage
+                const history = JSON.parse(localStorage.getItem('itsm_history') || '[]');
+                history.unshift({
+                    id: Date.now(),
+                    system: state.selectedSystem,
+                    title: state.formData.title,
+                    content: state.formData,
+                    score: state.qualityScore,
+                    createTime: new Date().toISOString(),
+                    status: '已填充'
+                });
+                localStorage.setItem('itsm_history', JSON.stringify(history));
+                
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                showToast('✅ 内容已填充到ITSM，请检查后提交', 'success');
+            }, 1000);
+        }
+
+        function resetForm() {
+            if (!confirm('确定要重置表单吗？所有内容将被清空。')) {
+                return;
+            }
+            
+            state.formData = {
+                title: '',
+                background: '',
+                goal: '',
+                scenario: '',
+                acceptance: ''
+            };
+            
+            document.getElementById('requirementTitle').value = '';
+            document.getElementById('requirementBackground').value = '';
+            document.getElementById('requirementGoal').value = '';
+            document.getElementById('requirementScenario').value = '';
+            document.getElementById('requirementAcceptance').value = '';
+            
+            calculateQuality();
+            showToast('表单已重置', 'success');
+        }
+
+        // ========== 提示消息 ==========
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toastIcon');
+            const messageEl = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type} active`;
+            messageEl.textContent = message;
+            
+            const icons = {
+                success: '✓',
+                error: '✕',
+                warning: '⚠'
+            };
+            icon.textContent = icons[type] || '✓';
+            
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // ========== 初始化 ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            // 模拟已选择系统（测试用）
+            selectSystem('SYS001', 'CRM客户管理系统');
+            selectConfidence('certain');
+            
+            // 初始化质量评分
+            calculateQuality();
+        });
+    </script>
+</body>
+</html>

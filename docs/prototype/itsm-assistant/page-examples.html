@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>需求示例库 - ITSM需求助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            font-size: 14px;
+            background: #f5f5f5;
+        }
+
+        .page-container {
+            width: 380px;
+            height: 100vh;
+            overflow-y: auto;
+            background: #f5f5f5;
+            padding: 16px;
+        }
+
+        /* 顶部导航 */
+        .header {
+            background: #ffffff;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-btn:hover {
+            background: #e6f7ff;
+            color: #1890ff;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #262626;
+        }
+
+        /* 场景筛选器 */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .filter-tab {
+            flex: 1;
+            padding: 8px;
+            background: #ffffff;
+            border: 1px solid #d9d9d9;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .filter-tab:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+
+        .filter-tab.active {
+            background: #1890ff;
+            color: #ffffff;
+            border-color: #1890ff;
+        }
+
+        /* 示例卡片 */
+        .example-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .example-card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .example-card:hover {
+            box-shadow: 0 4px 12px rgba(24, 144, 255, 0.2);
+        }
+
+        .example-header {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .example-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #262626;
+            flex: 1;
+        }
+
+        .example-score {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #52c41a;
+        }
+
+        .example-tags {
+            padding: 8px 16px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .example-tag {
+            padding: 2px 8px;
+            background: #e6f7ff;
+            color: #1890ff;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .example-tag.bug {
+            background: #fff1f0;
+            color: #f5222d;
+        }
+
+        .example-tag.optimize {
+            background: #fff7e6;
+            color: #fa8c16;
+        }
+
+        .example-tag.feature {
+            background: #f6ffed;
+            color: #52c41a;
+        }
+
+        /* 示例详情 */
+        .example-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .example-detail.active {
+            max-height: 1000px;
+        }
+
+        .detail-section {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-section:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #8c8c8c;
+            margin-bottom: 6px;
+        }
+
+        .detail-content {
+            font-size: 13px;
+            color: #262626;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .detail-actions {
+            padding: 12px 16px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #1890ff;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #40a9ff;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #262626;
+            border: 1px solid #d9d9d9;
+        }
+
+        .btn-secondary:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            border-left: 4px solid #52c41a;
+        }
+
+        .toast.active {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- 顶部导航 -->
+        <div class="header">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="page-title">📚 需求示例库</div>
+        </div>
+
+        <!-- 场景筛选器 -->
+        <div class="filter-tabs">
+            <div class="filter-tab active" onclick="filterByType('all')">全部</div>
+            <div class="filter-tab" onclick="filterByType('bug')">Bug反馈</div>
+            <div class="filter-tab" onclick="filterByType('optimize')">功能优化</div>
+            <div class="filter-tab" onclick="filterByType('feature')">新功能</div>
+        </div>
+
+        <!-- 示例列表 -->
+        <div class="example-list" id="exampleList">
+            <!-- 动态生成 -->
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <span>✓</span>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        // 示例数据库
+        const examplesData = [
+            {
+                id: 'EX001',
+                title: 'CRM客户查询响应慢',
+                type: 'bug',
+                category: '客户类',
+                score: 95,
+                content: {
+                    background: '客服团队反馈，在CRM系统查询客户信息时，页面加载时间超过10秒，严重影响工作效率。目前有100+客服人员使用该系统，每人每天需要查询客户信息约50次，累计浪费时间约80小时/天。问题从上周五（12月1日）开始出现，初步怀疑与数据库性能有关。',
+                    goal: '优化CRM客户查询性能，将响应时间从当前的10秒降低到3秒以内（P95指标），提升客服工作效率，减少客户等待时间。预期优化后，每天可节省约70小时工时，相当于提升35%的工作效率。',
+                    scenario: '典型使用场景：\n1. 客服人员接听客户来电时，需要立即查询客户的基本信息、历史订单、投诉记录等\n2. 查询频率：每个客服平均50次/天，高峰时段（上午9-11点）查询频率达到80次/天\n3. 查询条件：通过手机号、客户姓名、订单号等多种方式查询\n4. 数据规模：当前CRM系统存储约500万客户数据',
+                    acceptance: '1. 客户信息查询响应时间P95 < 3秒（当前10秒）\n2. 客户信息查询响应时间P99 < 5秒\n3. 在500万数据量下仍能保持上述性能指标\n4. 优化后不影响现有查询功能，无新增Bug\n5. 通过性能测试工具（JMeter）验证，并发100用户时仍能满足性能要求'
+                }
+            },
+            {
+                id: 'EX002',
+                title: '计费账单详情页加载失败',
+                type: 'bug',
+                category: '计费类',
+                score: 92,
+                content: {
+                    background: '客户在APP上查看计费账单详情时，约30%的请求会失败，显示"数据加载失败"错误提示。该问题从12月3日上线新版本后开始出现，影响约10万活跃用户。根据后台日志分析，错误主要集中在账单金额>1000元的记录上，怀疑是金额计算逻辑或数据格式问题。',
+                    goal: '修复账单详情页加载失败的Bug，将成功率从当前的70%提升到99.9%以上，确保用户能够正常查看账单详情。同时排查并修复根本原因，避免类似问题再次发生。',
+                    scenario: '典型使用场景：\n1. 用户在APP"我的账单"页面点击某个月份的账单\n2. 系统请求后台接口获取账单详情（包括消费明细、套餐信息、优惠信息）\n3. 页面展示账单详情，用户可以查看、下载或分享账单\n4. 失败场景：当账单金额>1000元时，约30%的请求返回500错误',
+                    acceptance: '1. 账单详情页加载成功率 >= 99.9%（当前70%）\n2. 修复后通过回归测试，覆盖各种金额场景（0-10000元）\n3. 后台日志不再出现500错误\n4. 通过压力测试，并发1000用户时仍能正常加载\n5. 修复后观察3天，无客户投诉和新Bug'
+                }
+            },
+            {
+                id: 'EX003',
+                title: '工单系统增加批量分配功能',
+                type: 'optimize',
+                category: '运维类',
+                score: 88,
+                content: {
+                    background: '运维团队每天需要处理约200个工单，目前只能逐个分配给工程师，操作繁琐且耗时。运维主管反馈，每天需要花费约2小时进行工单分配，如果能支持批量操作，预计可节省80%的时间。该需求已被多位运维主管提出，优先级较高。',
+                    goal: '在工单系统中新增批量分配功能，支持一次性选择多个工单并分配给指定工程师或团队。预期优化后，工单分配时间从2小时/天降低到20分钟/天，提升工作效率90%。',
+                    scenario: '典型使用场景：\n1. 运维主管登录工单系统，进入"待分配"工单列表\n2. 通过筛选条件（工单类型、优先级、区域等）筛选出需要分配的工单\n3. 勾选多个工单（支持全选），点击"批量分配"按钮\n4. 在弹出框中选择目标工程师或团队，填写备注信息\n5. 确认后，所有选中工单的状态变为"已分配"，并发送通知给工程师',
+                    acceptance: '1. 支持一次性选择最多100个工单进行批量分配\n2. 支持按工单类型、优先级、区域等条件筛选\n3. 分配后自动发送通知给目标工程师（邮件+短信）\n4. 批量操作的响应时间 < 5秒（100个工单）\n5. 通过UAT测试，运维主管确认功能满足需求'
+                }
+            },
+            {
+                id: 'EX004',
+                title: '监控告警增加智能降噪功能',
+                type: 'optimize',
+                category: '运维类',
+                score: 90,
+                content: {
+                    background: '当前监控告警系统每天产生约5000条告警，其中约60%是重复告警或低优先级告警，导致运维人员需要花费大量时间筛选和处理。运维团队反馈"告警疲劳"严重，经常错过真正重要的告警。希望增加智能降噪功能，自动合并相似告警、过滤低优先级告警。',
+                    goal: '通过智能算法实现告警降噪，将每天的有效告警数量从5000条降低到2000条以下，降噪率>=60%。同时确保P0/P1级别的重要告警不被误过滤，提升运维响应效率。',
+                    scenario: '典型使用场景：\n1. 系统监控到多个相似的告警（如同一服务器的多个磁盘空间告警）\n2. 智能降噪算法自动将相似告警合并为一条"聚合告警"\n3. 对于低优先级告警（P3/P4），系统自动降低通知频率或延迟通知\n4. 运维人员查看告警列表时，看到的是降噪后的精简告警\n5. 点击聚合告警可以展开查看原始告警详情',
+                    acceptance: '1. 告警降噪率 >= 60%（从5000条降到2000条以下）\n2. P0/P1告警100%保留，不被误过滤\n3. 相似告警合并准确率 >= 95%\n4. 支持手动调整降噪规则（白名单/黑名单）\n5. 通过A/B测试，运维团队确认降噪效果显著'
+                }
+            },
+            {
+                id: 'EX005',
+                title: '开发客户画像自动生成功能',
+                type: 'feature',
+                category: '客户类',
+                score: 85,
+                content: {
+                    background: '市场部门需要对客户进行精准营销，但目前缺少自动化的客户画像工具，只能手动分析客户数据（订单、行为、属性等），效率低下。希望开发客户画像自动生成功能，基于客户的历史数据自动生成标签（如"高价值客户"、"流失风险客户"等），并支持自定义规则。',
+                    goal: '开发客户画像自动生成功能，支持基于客户订单、行为、属性等多维度数据自动生成客户标签。预期上线后，市场部门可以节省80%的人工分析时间，并提升营销精准度20%。',
+                    scenario: '典型使用场景：\n1. 系统每天自动运行画像计算任务（凌晨2点）\n2. 读取客户的订单数据、行为数据（浏览、点击、购买）、属性数据（年龄、性别、地域）\n3. 根据预设规则计算客户标签（如：近30天消费>1000元 → "高价值客户"）\n4. 将标签写入客户档案，并支持通过CRM系统查询\n5. 市场人员可以根据标签筛选客户，进行精准营销',
+                    acceptance: '1. 支持自定义画像规则（至少20个预设规则）\n2. 画像计算准确率 >= 90%\n3. 每天可处理100万客户数据的画像计算\n4. 画像结果实时同步到CRM系统（延迟<10分钟）\n5. 通过业务验证，市场部门确认画像质量满足要求'
+                }
+            },
+            {
+                id: 'EX006',
+                title: '开发移动端工单APP',
+                type: 'feature',
+                category: '运维类',
+                score: 87,
+                content: {
+                    background: '外勤工程师需要现场处理工单，但目前只能通过PC端访问工单系统，无法在现场实时查看和更新工单状态。工程师反馈希望有移动端APP，支持离线查看工单、拍照上传、现场签字确认等功能，提升现场作业效率。',
+                    goal: '开发移动端工单APP（支持iOS和Android），支持工程师在现场查看工单详情、更新工单状态、拍照上传、客户签字确认等功能。预期上线后，工单处理效率提升30%，客户满意度提升15%。',
+                    scenario: '典型使用场景：\n1. 工程师出发前，在APP上查看今日待处理工单列表\n2. 到达现场后，打开工单详情，查看故障描述、历史记录\n3. 处理完成后，拍照上传现场照片（支持最多10张）\n4. 填写处理结果和备注，客户在手机屏幕上签字确认\n5. 提交后，工单状态自动更新为"已完成"，同步到后台系统',
+                    acceptance: '1. 支持iOS 12+和Android 8+系统\n2. 支持离线查看工单详情（离线存储最近100条）\n3. 支持拍照上传（最多10张，单张<5MB）\n4. 支持手写签字并生成签名图片\n5. 通过UAT测试，至少10名工程师试用并确认功能满足需求'
+                }
+            }
+        ];
+
+        let currentFilter = 'all';
+        let expandedExampleId = null;
+
+        // 渲染示例列表
+        function renderExamples() {
+            const filteredExamples = currentFilter === 'all' 
+                ? examplesData 
+                : examplesData.filter(ex => ex.type === currentFilter);
+            
+            const listHTML = filteredExamples.map(example => {
+                const typeLabels = {
+                    bug: '🐛 Bug反馈',
+                    optimize: '⚡ 功能优化',
+                    feature: '✨ 新功能'
+                };
+                
+                return `
+                    <div class="example-card" onclick="toggleExample('${example.id}')">
+                        <div class="example-header">
+                            <div class="example-title">${example.title}</div>
+                            <div class="example-score">
+                                ⭐ ${example.score}分
+                            </div>
+                        </div>
+                        <div class="example-tags">
+                            <span class="example-tag ${example.type}">${typeLabels[example.type]}</span>
+                            <span class="example-tag">${example.category}</span>
+                        </div>
+                        <div class="example-detail ${expandedExampleId === example.id ? 'active' : ''}" id="detail-${example.id}">
+                            <div class="detail-section">
+                                <div class="detail-label">需求背景</div>
+                                <div class="detail-content">${example.content.background}</div>
+                            </div>
+                            <div class="detail-section">
+                                <div class="detail-label">需求目标</div>
+                                <div class="detail-content">${example.content.goal}</div>
+                            </div>
+                            <div class="detail-section">
+                                <div class="detail-label">使用场景</div>
+                                <div class="detail-content">${example.content.scenario}</div>
+                            </div>
+                            <div class="detail-section">
+                                <div class="detail-label">验收标准</div>
+                                <div class="detail-content">${example.content.acceptance}</div>
+                            </div>
+                            <div class="detail-actions">
+                                <button class="btn btn-secondary" onclick="copyExample('${example.id}'); event.stopPropagation();">
+                                    📋 复制内容
+                                </button>
+                                <button class="btn btn-primary" onclick="applyExample('${example.id}'); event.stopPropagation();">
+                                    ✅ 应用此示例
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('exampleList').innerHTML = listHTML;
+        }
+
+        // 筛选示例
+        function filterByType(type) {
+            currentFilter = type;
+            
+            // 更新筛选按钮状态
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            expandedExampleId = null; // 清除展开状态
+            renderExamples();
+        }
+
+        // 展开/收起示例
+        function toggleExample(id) {
+            if (expandedExampleId === id) {
+                expandedExampleId = null;
+            } else {
+                expandedExampleId = id;
+            }
+            renderExamples();
+        }
+
+        // 复制示例
+        function copyExample(id) {
+            const example = examplesData.find(ex => ex.id === id);
+            const text = `
+【需求背景】
+${example.content.background}
+
+【需求目标】
+${example.content.goal}
+
+【使用场景】
+${example.content.scenario}
+
+【验收标准】
+${example.content.acceptance}
+            `.trim();
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('✅ 已复制到剪贴板');
+            }).catch(() => {
+                showToast('⚠️ 复制失败，请手动复制');
+            });
+        }
+
+        // 应用示例
+        function applyExample(id) {
+            const example = examplesData.find(ex => ex.id === id);
+            
+            // 保存到localStorage
+            localStorage.setItem('appliedExample', JSON.stringify({
+                title: example.title,
+                content: example.content,
+                type: example.type
+            }));
+            
+            showToast('✅ 示例已应用，正在返回...');
+            
+            setTimeout(() => {
+                goBack();
+            }, 1000);
+        }
+
+        function goBack() {
+            window.location.href = 'sidebar-main.html';
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('active');
+            
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            renderExamples();
+        });
+    </script>
+</body>
+</html>

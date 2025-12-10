@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统分类导航 - ITSM需求助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            font-size: 14px;
+            background: #f5f5f5;
+        }
+
+        .page-container {
+            width: 380px;
+            height: 100vh;
+            overflow-y: auto;
+            background: #f5f5f5;
+            padding: 16px;
+        }
+
+        /* 顶部导航 */
+        .header {
+            background: #ffffff;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-btn:hover {
+            background: #e6f7ff;
+            color: #1890ff;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #262626;
+        }
+
+        /* 分类卡片 */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .category-card {
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .category-card:hover {
+            box-shadow: 0 4px 12px rgba(24, 144, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .category-card.active {
+            border: 2px solid #1890ff;
+            background: #e6f7ff;
+        }
+
+        .category-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #262626;
+            margin-bottom: 4px;
+        }
+
+        .category-count {
+            font-size: 12px;
+            color: #8c8c8c;
+        }
+
+        /* 系统列表 */
+        .systems-section {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 16px;
+            display: none;
+        }
+
+        .systems-section.active {
+            display: block;
+        }
+
+        .systems-header {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #262626;
+        }
+
+        .system-list {
+            list-style: none;
+        }
+
+        .system-item {
+            padding: 12px;
+            border: 1px solid #f0f0f0;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .system-item:hover {
+            border-color: #1890ff;
+            background: #e6f7ff;
+        }
+
+        .system-name {
+            font-size: 14px;
+            color: #262626;
+            margin-bottom: 4px;
+        }
+
+        .system-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .system-tag {
+            padding: 2px 8px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #8c8c8c;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            border-left: 4px solid #52c41a;
+        }
+
+        .toast.active {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- 顶部导航 -->
+        <div class="header">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="page-title">📂 系统分类导航</div>
+        </div>
+
+        <!-- 分类卡片 -->
+        <div class="category-grid" id="categoryGrid">
+            <div class="category-card" onclick="showCategory('customer')">
+                <div class="category-icon">👥</div>
+                <div class="category-name">客户类</div>
+                <div class="category-count">8个系统</div>
+            </div>
+            <div class="category-card" onclick="showCategory('billing')">
+                <div class="category-icon">💰</div>
+                <div class="category-name">计费类</div>
+                <div class="category-count">6个系统</div>
+            </div>
+            <div class="category-card" onclick="showCategory('network')">
+                <div class="category-icon">🌐</div>
+                <div class="category-name">网络类</div>
+                <div class="category-count">7个系统</div>
+            </div>
+            <div class="category-card" onclick="showCategory('data')">
+                <div class="category-icon">📊</div>
+                <div class="category-name">数据类</div>
+                <div class="category-count">5个系统</div>
+            </div>
+            <div class="category-card" onclick="showCategory('ops')">
+                <div class="category-icon">🔧</div>
+                <div class="category-name">运维类</div>
+                <div class="category-count">6个系统</div>
+            </div>
+            <div class="category-card" onclick="showCategory('hr')">
+                <div class="category-icon">👔</div>
+                <div class="category-name">HR类</div>
+                <div class="category-count">4个系统</div>
+            </div>
+        </div>
+
+        <!-- 系统列表 -->
+        <div class="systems-section" id="systemsSection">
+            <div class="systems-header" id="systemsHeader">客户类系统</div>
+            <ul class="system-list" id="systemList">
+                <!-- 动态生成 -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <span>✓</span>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        // 系统数据库
+        const systemsData = {
+            customer: [
+                { id: 'SYS001', name: 'CRM客户管理系统', tags: ['客户', '关系管理', 'khgl'] },
+                { id: 'SYS002', name: '客户服务平台', tags: ['客服', '工单', 'kfpt'] },
+                { id: 'SYS003', name: '客户数据分析系统', tags: ['数据', '分析', 'sjfx'] },
+                { id: 'SYS004', name: '客户画像系统', tags: ['画像', '标签', 'hxxt'] },
+                { id: 'SYS005', name: '投诉管理系统', tags: ['投诉', '处理', 'tsgl'] },
+                { id: 'SYS006', name: '客户满意度调查', tags: ['满意度', '问卷', 'myd'] },
+                { id: 'SYS007', name: '会员积分系统', tags: ['会员', '积分', 'jfxt'] },
+                { id: 'SYS008', name: '客户流失预警', tags: ['流失', '预警', 'lsyj'] }
+            ],
+            billing: [
+                { id: 'SYS011', name: '计费系统', tags: ['计费', '账单', 'jfxt'] },
+                { id: 'SYS012', name: '账单查询系统', tags: ['账单', '查询', 'zdcx'] },
+                { id: 'SYS013', name: '欠费管理系统', tags: ['欠费', '催缴', 'qfgl'] },
+                { id: 'SYS014', name: '套餐管理系统', tags: ['套餐', '资费', 'tcgl'] },
+                { id: 'SYS015', name: '发票管理系统', tags: ['发票', '开票', 'fpgl'] },
+                { id: 'SYS016', name: '充值缴费系统', tags: ['充值', '缴费', 'czjf'] }
+            ],
+            network: [
+                { id: 'SYS021', name: '网络监控平台', tags: ['监控', '网络', 'wljk'] },
+                { id: 'SYS022', name: '故障告警系统', tags: ['告警', '故障', 'gzgj'] },
+                { id: 'SYS023', name: '网络优化系统', tags: ['优化', '性能', 'wlyh'] },
+                { id: 'SYS024', name: '带宽管理系统', tags: ['带宽', '流量', 'dkgl'] },
+                { id: 'SYS025', name: '设备管理系统', tags: ['设备', '资产', 'sbgl'] },
+                { id: 'SYS026', name: '网络拓扑系统', tags: ['拓扑', '网络', 'wltp'] },
+                { id: 'SYS027', name: '性能分析平台', tags: ['性能', '分析', 'xnfx'] }
+            ],
+            data: [
+                { id: 'SYS031', name: '数据仓库系统', tags: ['数据仓库', 'ETL', 'sjck'] },
+                { id: 'SYS032', name: '报表平台', tags: ['报表', 'BI', 'bbpt'] },
+                { id: 'SYS033', name: '数据质量管理', tags: ['质量', '治理', 'sjzl'] },
+                { id: 'SYS034', name: '大数据分析平台', tags: ['大数据', '分析', 'dsjfx'] },
+                { id: 'SYS035', name: '数据交换平台', tags: ['交换', '共享', 'sjjh'] }
+            ],
+            ops: [
+                { id: 'SYS041', name: '运维工单系统', tags: ['工单', '流程', 'ywgd'] },
+                { id: 'SYS042', name: '资源管理系统', tags: ['资源', '配置', 'zygl'] },
+                { id: 'SYS043', name: '自动化运维平台', tags: ['自动化', 'DevOps', 'zdh'] },
+                { id: 'SYS044', name: '日志管理系统', tags: ['日志', '审计', 'rzgl'] },
+                { id: 'SYS045', name: '监控告警平台', tags: ['监控', '告警', 'jkgj'] },
+                { id: 'SYS046', name: '配置管理系统', tags: ['配置', 'CMDB', 'pzgl'] }
+            ],
+            hr: [
+                { id: 'SYS051', name: 'HR人事系统', tags: ['人事', '员工', 'rsxt'] },
+                { id: 'SYS052', name: '考勤管理系统', tags: ['考勤', '打卡', 'kqgl'] },
+                { id: 'SYS053', name: '绩效考核系统', tags: ['绩效', '考核', 'jxkh'] },
+                { id: 'SYS054', name: '培训管理系统', tags: ['培训', '学习', 'pxgl'] }
+            ]
+        };
+
+        const categoryNames = {
+            customer: '客户类',
+            billing: '计费类',
+            network: '网络类',
+            data: '数据类',
+            ops: '运维类',
+            hr: 'HR类'
+        };
+
+        let currentCategory = null;
+
+        function showCategory(category) {
+            currentCategory = category;
+            
+            // 更新分类卡片选中状态
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // 更新系统列表
+            document.getElementById('systemsHeader').textContent = categoryNames[category] + '系统';
+            
+            const systems = systemsData[category] || [];
+            const listHTML = systems.map(sys => `
+                <li class="system-item" onclick="selectSystem('${sys.id}', '${sys.name}')">
+                    <div class="system-name">${sys.name}</div>
+                    <div class="system-tags">
+                        ${sys.tags.map(tag => `<span class="system-tag">${tag}</span>`).join('')}
+                    </div>
+                </li>
+            `).join('');
+            
+            document.getElementById('systemList').innerHTML = listHTML;
+            document.getElementById('systemsSection').classList.add('active');
+            
+            // 滚动到系统列表
+            document.getElementById('systemsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectSystem(id, name) {
+            // 保存选择到localStorage
+            localStorage.setItem('selectedSystem', JSON.stringify({ id, name }));
+            
+            showToast(`已选择：${name}`);
+            
+            // 延迟返回主界面
+            setTimeout(() => {
+                goBack();
+            }, 1000);
+        }
+
+        function goBack() {
+            window.location.href = 'sidebar-main.html';
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('active');
+            
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // 初始化：自动展开客户类
+        document.addEventListener('DOMContentLoaded', () => {
+            showCategory('customer');
+        });
+    </script>
+</body>
+</html>

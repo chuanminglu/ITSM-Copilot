@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITSM需求助手 - 演示入口</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            margin-bottom: 32px;
+        }
+
+        .intro h2 {
+            font-size: 20px;
+            color: #262626;
+            margin-bottom: 16px;
+        }
+
+        .intro p {
+            font-size: 14px;
+            color: #595959;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .feature-card {
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: #e6f7ff;
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .feature-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #262626;
+            margin-bottom: 6px;
+        }
+
+        .feature-desc {
+            font-size: 13px;
+            color: #8c8c8c;
+            line-height: 1.6;
+        }
+
+        .pages-list {
+            margin-bottom: 32px;
+        }
+
+        .pages-list h3 {
+            font-size: 18px;
+            color: #262626;
+            margin-bottom: 16px;
+        }
+
+        .page-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: #ffffff;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #262626;
+            transition: all 0.3s;
+        }
+
+        .page-link:hover {
+            border-color: #1890ff;
+            background: #e6f7ff;
+            transform: translateX(4px);
+        }
+
+        .page-link-info {
+            flex: 1;
+        }
+
+        .page-link-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .page-link-desc {
+            font-size: 13px;
+            color: #8c8c8c;
+        }
+
+        .page-link-icon {
+            font-size: 20px;
+            color: #1890ff;
+        }
+
+        .tips {
+            padding: 20px;
+            background: #fff7e6;
+            border: 1px solid #ffd591;
+            border-radius: 8px;
+        }
+
+        .tips-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #d48806;
+            margin-bottom: 8px;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tips-list li {
+            font-size: 13px;
+            color: #595959;
+            line-height: 1.8;
+            margin-bottom: 4px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .tips-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #faad14;
+        }
+
+        .footer {
+            padding: 20px 40px;
+            background: #f5f5f5;
+            text-align: center;
+            font-size: 13px;
+            color: #8c8c8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 ITSM需求助手</h1>
+            <p>HTML原型演示 - 广东电信培训项目</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>项目简介</h2>
+                <p>本原型展示了ITSM需求助手浏览器插件的核心功能，帮助用户快速、高质量地提交需求。</p>
+                <p>通过智能推荐、结构化引导、实时质量检测等AI赋能功能，将需求质量从平均45分提升到80分以上，需求返工率降低60%。</p>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-title">智能系统搜索</div>
+                    <div class="feature-desc">支持拼音搜索、模糊匹配，快速定位目标系统</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <div class="feature-title">智能模板推荐</div>
+                    <div class="feature-desc">基于关键词自动推荐合适的需求模板</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-title">结构化引导</div>
+                    <div class="feature-desc">4字段引导填写，降低需求描述门槛</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <div class="feature-title">实时质量评分</div>
+                    <div class="feature-desc">0-100分质量检测，5维度评分详情</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-title">需求示例库</div>
+                    <div class="feature-desc">6个高质量示例，一键应用或复制</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">提交前拦截</div>
+                    <div class="feature-desc">低质量需求警告，引导补充完善</div>
+                </div>
+            </div>
+
+            <div class="pages-list">
+                <h3>📄 原型页面导航</h3>
+                <div class="page-links">
+                    <a href="sidebar-main.html" class="page-link">
+                        <div class="page-link-info">
+                            <div class="page-link-title">1. 侧边栏主界面</div>
+                            <div class="page-link-desc">系统选择、模板推荐、需求填写、质量评分、提交操作</div>
+                        </div>
+                        <div class="page-link-icon">→</div>
+                    </a>
+                    <a href="page-category.html" class="page-link">
+                        <div class="page-link-info">
+                            <div class="page-link-title">2. 系统分类导航页</div>
+                            <div class="page-link-desc">6大分类、36个系统、系统搜索和选择</div>
+                        </div>
+                        <div class="page-link-icon">→</div>
+                    </a>
+                    <a href="page-examples.html" class="page-link">
+                        <div class="page-link-info">
+                            <div class="page-link-title">3. 需求示例库页</div>
+                            <div class="page-link-desc">6个高质量示例、场景筛选、一键应用</div>
+                        </div>
+                        <div class="page-link-icon">→</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">💡 使用提示</div>
+                <ul class="tips-list">
+                    <li>建议从"侧边栏主界面"开始体验完整流程</li>
+                    <li>主界面已预置测试数据，可直接测试质量评分功能</li>
+                    <li>所有表单均支持实时验证和防抖优化</li>
+                    <li>数据保存在浏览器LocalStorage中，刷新页面不会丢失</li>
+                    <li>页面间通过LocalStorage传递数据，体验真实交互流程</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 ITSM需求助手 | 基于设计元素分析和交互设计文档生成</p>
+            <p style="margin-top: 8px;">技术栈：HTML + CSS + JavaScript（纯前端，无需服务器）</p>
+        </div>
+    </div>
+</body>
+</html>

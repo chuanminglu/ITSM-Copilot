@@ -1,0 +1,47 @@
+{
+  "name": "itsm-assistant",
+  "version": "1.0.0",
+  "description": "ITSM智能辅助浏览器插件 - 通过AI+规则双轨推荐技术提升工单创建效率",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && node scripts/copy-manifest.js",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "keywords": [
+    "chrome-extension",
+    "itsm",
+    "ai-assistant",
+    "react",
+    "typescript"
+  ],
+  "author": "开发者A",
+  "license": "MIT",
+  "dependencies": {
+    "fuse.js": "^7.0.0",
+    "lodash.debounce": "^4.0.8",
+    "openai": "^4.20.1",
+    "pinyin-pro": "^3.19.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.254",
+    "@types/lodash.debounce": "^4.0.9",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.22",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8"
+  }
+}

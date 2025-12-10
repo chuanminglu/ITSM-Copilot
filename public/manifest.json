@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "ITSM智能辅助插件",
+  "version": "1.0.0",
+  "description": "通过AI+规则双轨推荐技术，将ITSM工单创建时的系统选择准确率从60%提升至85%+",
+  "action": {
+    "default_title": "ITSM智能辅助"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "sidebar.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://itsm.company.com/*", "*://itsm-test.company.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "*://itsm.company.com/*",
+    "*://itsm-test.company.com/*"
+  ]
+}

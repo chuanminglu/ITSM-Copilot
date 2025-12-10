@@ -1,0 +1,501 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-12-10",
+  "systems": [
+    {
+      "id": "SYS-001",
+      "name": "客户关系管理系统",
+      "keywords": ["客户", "CRM", "客户管理", "销售", "客户信息"],
+      "pinyin": ["kehu", "kehguanxiguanlixitong", "kehguanli", "xiaoshou"],
+      "category": "业务系统",
+      "responsibility": "销售部",
+      "contact": "sales-support@company.com"
+    },
+    {
+      "id": "SYS-002",
+      "name": "企业资源计划系统",
+      "keywords": ["ERP", "资源计划", "企业管理", "财务", "采购"],
+      "pinyin": ["ERP", "ziyuanjihua", "qiyeguanli", "caiwu", "caigou"],
+      "category": "业务系统",
+      "responsibility": "财务部",
+      "contact": "erp-support@company.com"
+    },
+    {
+      "id": "SYS-003",
+      "name": "人力资源管理系统",
+      "keywords": ["HR", "人力资源", "员工", "招聘", "薪酬", "考勤"],
+      "pinyin": ["HR", "renliziyuan", "yuangong", "zhaopin", "xinchou", "kaoqin"],
+      "category": "业务系统",
+      "responsibility": "人力资源部",
+      "contact": "hr-support@company.com"
+    },
+    {
+      "id": "SYS-004",
+      "name": "办公自动化系统",
+      "keywords": ["OA", "办公", "审批", "流程", "公文"],
+      "pinyin": ["OA", "bangong", "shenpi", "liucheng", "gongwen"],
+      "category": "业务系统",
+      "responsibility": "行政部",
+      "contact": "oa-support@company.com"
+    },
+    {
+      "id": "SYS-005",
+      "name": "供应链管理系统",
+      "keywords": ["SCM", "供应链", "物流", "仓储", "库存"],
+      "pinyin": ["SCM", "gongyinglian", "wuliu", "cangchu", "kucun"],
+      "category": "业务系统",
+      "responsibility": "供应链部",
+      "contact": "scm-support@company.com"
+    },
+    {
+      "id": "SYS-006",
+      "name": "项目管理系统",
+      "keywords": ["项目", "PM", "项目进度", "任务", "甘特图"],
+      "pinyin": ["xiangmu", "PM", "xiangmujindu", "renwu", "ganttetu"],
+      "category": "业务系统",
+      "responsibility": "项目管理办公室",
+      "contact": "pmo-support@company.com"
+    },
+    {
+      "id": "SYS-007",
+      "name": "财务管理系统",
+      "keywords": ["财务", "会计", "报表", "凭证", "账务"],
+      "pinyin": ["caiwu", "kuaiji", "baobiao", "pingzheng", "zhangwu"],
+      "category": "业务系统",
+      "responsibility": "财务部",
+      "contact": "finance-support@company.com"
+    },
+    {
+      "id": "SYS-008",
+      "name": "资产管理系统",
+      "keywords": ["资产", "固定资产", "设备", "盘点"],
+      "pinyin": ["zichan", "gudingzichan", "shebei", "pandian"],
+      "category": "业务系统",
+      "responsibility": "资产管理部",
+      "contact": "asset-support@company.com"
+    },
+    {
+      "id": "SYS-009",
+      "name": "知识管理系统",
+      "keywords": ["知识库", "文档", "Wiki", "知识共享"],
+      "pinyin": ["zhishiku", "wendang", "Wiki", "zhishigongxiang"],
+      "category": "业务系统",
+      "responsibility": "IT部",
+      "contact": "km-support@company.com"
+    },
+    {
+      "id": "SYS-010",
+      "name": "电子邮件系统",
+      "keywords": ["邮件", "Email", "Exchange", "Outlook"],
+      "pinyin": ["youjian", "Email", "Exchange", "Outlook"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "email-support@company.com"
+    },
+    {
+      "id": "SYS-011",
+      "name": "视频会议系统",
+      "keywords": ["视频会议", "会议", "Zoom", "Teams", "远程"],
+      "pinyin": ["shipinhuiyi", "huiyi", "Zoom", "Teams", "yuancheng"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "video-support@company.com"
+    },
+    {
+      "id": "SYS-012",
+      "name": "统一身份认证系统",
+      "keywords": ["SSO", "单点登录", "认证", "AD", "LDAP"],
+      "pinyin": ["SSO", "dandiandenglu", "renzheng", "AD", "LDAP"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "sso-support@company.com"
+    },
+    {
+      "id": "SYS-013",
+      "name": "VPN系统",
+      "keywords": ["VPN", "虚拟专用网", "远程接入", "安全"],
+      "pinyin": ["VPN", "xunizhuanyongwang", "yuanchengjieru", "anquan"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "vpn-support@company.com"
+    },
+    {
+      "id": "SYS-014",
+      "name": "防火墙系统",
+      "keywords": ["防火墙", "安全", "网络", "访问控制"],
+      "pinyin": ["fanghuoqiang", "anquan", "wangluo", "fangwenkongzhi"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "firewall-support@company.com"
+    },
+    {
+      "id": "SYS-015",
+      "name": "数据库管理系统",
+      "keywords": ["数据库", "MySQL", "Oracle", "SQL Server"],
+      "pinyin": ["shujuku", "MySQL", "Oracle", "SQLServer"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "db-support@company.com"
+    },
+    {
+      "id": "SYS-016",
+      "name": "云存储系统",
+      "keywords": ["云存储", "网盘", "文件共享", "OneDrive"],
+      "pinyin": ["yuncunchu", "wangpan", "wenjiangongxiang", "OneDrive"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "storage-support@company.com"
+    },
+    {
+      "id": "SYS-017",
+      "name": "备份系统",
+      "keywords": ["备份", "容灾", "数据保护", "恢复"],
+      "pinyin": ["beifen", "rongzai", "shujubaohu", "huifu"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "backup-support@company.com"
+    },
+    {
+      "id": "SYS-018",
+      "name": "监控告警系统",
+      "keywords": ["监控", "告警", "性能", "Zabbix", "Prometheus"],
+      "pinyin": ["jiankong", "gaojing", "xingneng", "Zabbix", "Prometheus"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "monitor-support@company.com"
+    },
+    {
+      "id": "SYS-019",
+      "name": "日志管理系统",
+      "keywords": ["日志", "审计", "ELK", "日志分析"],
+      "pinyin": ["rizhi", "shenji", "ELK", "rizhifenxi"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "log-support@company.com"
+    },
+    {
+      "id": "SYS-020",
+      "name": "负载均衡系统",
+      "keywords": ["负载均衡", "LB", "F5", "Nginx"],
+      "pinyin": ["fuzaijunheng", "LB", "F5", "Nginx"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "lb-support@company.com"
+    },
+    {
+      "id": "SYS-021",
+      "name": "堡垒机系统",
+      "keywords": ["堡垒机", "运维审计", "SSH", "远程管理"],
+      "pinyin": ["baoleiji", "yunweishenji", "SSH", "yuanchengguanli"],
+      "category": "基础设施",
+      "responsibility": "IT部",
+      "contact": "bastion-support@company.com"
+    },
+    {
+      "id": "SYS-022",
+      "name": "CMDB配置管理系统",
+      "keywords": ["CMDB", "配置管理", "资产", "CI"],
+      "pinyin": ["CMDB", "peizhiguanli", "zichan", "CI"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "cmdb-support@company.com"
+    },
+    {
+      "id": "SYS-023",
+      "name": "运维自动化平台",
+      "keywords": ["自动化", "运维", "Ansible", "脚本"],
+      "pinyin": ["zidonghua", "yunwei", "Ansible", "jiaoben"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "automation-support@company.com"
+    },
+    {
+      "id": "SYS-024",
+      "name": "容器平台",
+      "keywords": ["容器", "Docker", "Kubernetes", "K8s"],
+      "pinyin": ["rongqi", "Docker", "Kubernetes", "K8s"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "container-support@company.com"
+    },
+    {
+      "id": "SYS-025",
+      "name": "DevOps平台",
+      "keywords": ["DevOps", "CI/CD", "Jenkins", "GitLab"],
+      "pinyin": ["DevOps", "CICD", "Jenkins", "GitLab"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "devops-support@company.com"
+    },
+    {
+      "id": "SYS-026",
+      "name": "代码仓库系统",
+      "keywords": ["Git", "代码", "版本控制", "SVN"],
+      "pinyin": ["Git", "daima", "banbenkongzhi", "SVN"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "git-support@company.com"
+    },
+    {
+      "id": "SYS-027",
+      "name": "制品库系统",
+      "keywords": ["制品库", "Maven", "npm", "Docker Registry"],
+      "pinyin": ["zhipinku", "Maven", "npm", "DockerRegistry"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "artifact-support@company.com"
+    },
+    {
+      "id": "SYS-028",
+      "name": "测试管理系统",
+      "keywords": ["测试", "QA", "缺陷", "用例"],
+      "pinyin": ["ceshi", "QA", "quexian", "yongli"],
+      "category": "IT运维",
+      "responsibility": "测试部",
+      "contact": "qa-support@company.com"
+    },
+    {
+      "id": "SYS-029",
+      "name": "需求管理系统",
+      "keywords": ["需求", "产品", "backlog", "Jira"],
+      "pinyin": ["xuqiu", "chanpin", "backlog", "Jira"],
+      "category": "IT运维",
+      "responsibility": "产品部",
+      "contact": "req-support@company.com"
+    },
+    {
+      "id": "SYS-030",
+      "name": "API网关系统",
+      "keywords": ["API网关", "微服务", "路由", "鉴权"],
+      "pinyin": ["APIwangguan", "weifuwu", "luyou", "jianquan"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "gateway-support@company.com"
+    },
+    {
+      "id": "SYS-031",
+      "name": "消息队列系统",
+      "keywords": ["消息队列", "MQ", "Kafka", "RabbitMQ"],
+      "pinyin": ["xiaoxiduilie", "MQ", "Kafka", "RabbitMQ"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "mq-support@company.com"
+    },
+    {
+      "id": "SYS-032",
+      "name": "缓存系统",
+      "keywords": ["缓存", "Redis", "Memcached"],
+      "pinyin": ["huancun", "Redis", "Memcached"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "cache-support@company.com"
+    },
+    {
+      "id": "SYS-033",
+      "name": "搜索引擎系统",
+      "keywords": ["搜索", "Elasticsearch", "全文检索"],
+      "pinyin": ["sousuo", "Elasticsearch", "quanwenjiansuo"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "search-support@company.com"
+    },
+    {
+      "id": "SYS-034",
+      "name": "数据仓库系统",
+      "keywords": ["数据仓库", "DW", "Hive", "数据分析"],
+      "pinyin": ["shujucangku", "DW", "Hive", "shujufenxi"],
+      "category": "数据平台",
+      "responsibility": "数据部",
+      "contact": "dw-support@company.com"
+    },
+    {
+      "id": "SYS-035",
+      "name": "大数据平台",
+      "keywords": ["大数据", "Hadoop", "Spark", "数据湖"],
+      "pinyin": ["dashuju", "Hadoop", "Spark", "shujuhu"],
+      "category": "数据平台",
+      "responsibility": "数据部",
+      "contact": "bigdata-support@company.com"
+    },
+    {
+      "id": "SYS-036",
+      "name": "BI商业智能系统",
+      "keywords": ["BI", "报表", "可视化", "Tableau", "PowerBI"],
+      "pinyin": ["BI", "baobiao", "keshihua", "Tableau", "PowerBI"],
+      "category": "数据平台",
+      "responsibility": "数据部",
+      "contact": "bi-support@company.com"
+    },
+    {
+      "id": "SYS-037",
+      "name": "数据治理平台",
+      "keywords": ["数据治理", "数据质量", "元数据"],
+      "pinyin": ["shujuzhili", "shujuzhiliang", "yuanshuju"],
+      "category": "数据平台",
+      "responsibility": "数据部",
+      "contact": "dg-support@company.com"
+    },
+    {
+      "id": "SYS-038",
+      "name": "ETL数据集成系统",
+      "keywords": ["ETL", "数据集成", "数据同步", "Kettle"],
+      "pinyin": ["ETL", "shujujicheng", "shujutongbu", "Kettle"],
+      "category": "数据平台",
+      "responsibility": "数据部",
+      "contact": "etl-support@company.com"
+    },
+    {
+      "id": "SYS-039",
+      "name": "AI训练平台",
+      "keywords": ["AI", "机器学习", "深度学习", "TensorFlow"],
+      "pinyin": ["AI", "jiqixuexi", "shenduxuexi", "TensorFlow"],
+      "category": "数据平台",
+      "responsibility": "AI部",
+      "contact": "ai-support@company.com"
+    },
+    {
+      "id": "SYS-040",
+      "name": "RPA机器人流程自动化",
+      "keywords": ["RPA", "机器人", "自动化", "UiPath"],
+      "pinyin": ["RPA", "jiqiren", "zidonghua", "UiPath"],
+      "category": "业务系统",
+      "responsibility": "数字化部",
+      "contact": "rpa-support@company.com"
+    },
+    {
+      "id": "SYS-041",
+      "name": "电子签章系统",
+      "keywords": ["电子签章", "签名", "CA", "合同"],
+      "pinyin": ["dianziqianzhang", "qianming", "CA", "hetong"],
+      "category": "业务系统",
+      "responsibility": "法务部",
+      "contact": "esign-support@company.com"
+    },
+    {
+      "id": "SYS-042",
+      "name": "合同管理系统",
+      "keywords": ["合同", "协议", "法务", "审批"],
+      "pinyin": ["hetong", "xieyi", "fawu", "shenpi"],
+      "category": "业务系统",
+      "responsibility": "法务部",
+      "contact": "contract-support@company.com"
+    },
+    {
+      "id": "SYS-043",
+      "name": "印章管理系统",
+      "keywords": ["印章", "用印", "审批"],
+      "pinyin": ["yinzhang", "yongyin", "shenpi"],
+      "category": "业务系统",
+      "responsibility": "行政部",
+      "contact": "seal-support@company.com"
+    },
+    {
+      "id": "SYS-044",
+      "name": "档案管理系统",
+      "keywords": ["档案", "文档", "归档", "借阅"],
+      "pinyin": ["dangan", "wendang", "guidang", "jieyue"],
+      "category": "业务系统",
+      "responsibility": "行政部",
+      "contact": "archive-support@company.com"
+    },
+    {
+      "id": "SYS-045",
+      "name": "访客管理系统",
+      "keywords": ["访客", "门禁", "来访", "登记"],
+      "pinyin": ["fangke", "menjin", "laifang", "dengji"],
+      "category": "业务系统",
+      "responsibility": "安保部",
+      "contact": "visitor-support@company.com"
+    },
+    {
+      "id": "SYS-046",
+      "name": "会议室预订系统",
+      "keywords": ["会议室", "预订", "预约", "房间"],
+      "pinyin": ["huiyishi", "yuding", "yuyue", "fangjian"],
+      "category": "业务系统",
+      "responsibility": "行政部",
+      "contact": "room-support@company.com"
+    },
+    {
+      "id": "SYS-047",
+      "name": "食堂管理系统",
+      "keywords": ["食堂", "订餐", "餐饮", "就餐"],
+      "pinyin": ["shitang", "dingcan", "canyin", "jiucan"],
+      "category": "业务系统",
+      "responsibility": "后勤部",
+      "contact": "canteen-support@company.com"
+    },
+    {
+      "id": "SYS-048",
+      "name": "班车管理系统",
+      "keywords": ["班车", "通勤", "预约", "交通"],
+      "pinyin": ["banche", "tongqin", "yuyue", "jiaotong"],
+      "category": "业务系统",
+      "responsibility": "后勤部",
+      "contact": "shuttle-support@company.com"
+    },
+    {
+      "id": "SYS-049",
+      "name": "培训管理系统",
+      "keywords": ["培训", "学习", "课程", "考试"],
+      "pinyin": ["peixun", "xuexi", "kecheng", "kaoshi"],
+      "category": "业务系统",
+      "responsibility": "人力资源部",
+      "contact": "training-support@company.com"
+    },
+    {
+      "id": "SYS-050",
+      "name": "绩效考核系统",
+      "keywords": ["绩效", "KPI", "考核", "评估"],
+      "pinyin": ["jixiao", "KPI", "kaohe", "pinggu"],
+      "category": "业务系统",
+      "responsibility": "人力资源部",
+      "contact": "performance-support@company.com"
+    },
+    {
+      "id": "SYS-051",
+      "name": "招聘管理系统",
+      "keywords": ["招聘", "面试", "候选人", "offer"],
+      "pinyin": ["zhaopin", "mianshi", "houxuanren", "offer"],
+      "category": "业务系统",
+      "responsibility": "人力资源部",
+      "contact": "recruit-support@company.com"
+    },
+    {
+      "id": "SYS-052",
+      "name": "薪酬福利系统",
+      "keywords": ["薪酬", "工资", "福利", "社保"],
+      "pinyin": ["xinchou", "gongzi", "fuli", "shebao"],
+      "category": "业务系统",
+      "responsibility": "人力资源部",
+      "contact": "payroll-support@company.com"
+    },
+    {
+      "id": "SYS-053",
+      "name": "在线客服系统",
+      "keywords": ["客服", "在线", "聊天", "工单"],
+      "pinyin": ["kefu", "zaixian", "liaotian", "gongdan"],
+      "category": "业务系统",
+      "responsibility": "客服部",
+      "contact": "cs-support@company.com"
+    },
+    {
+      "id": "SYS-054",
+      "name": "呼叫中心系统",
+      "keywords": ["呼叫中心", "热线", "电话", "IVR"],
+      "pinyin": ["hujiazhongxin", "rexian", "dianhua", "IVR"],
+      "category": "业务系统",
+      "responsibility": "客服部",
+      "contact": "callcenter-support@company.com"
+    },
+    {
+      "id": "SYS-055",
+      "name": "工单管理系统",
+      "keywords": ["工单", "服务台", "ITSM", "IT服务"],
+      "pinyin": ["gongdan", "fuwutai", "ITSM", "ITfuwu"],
+      "category": "IT运维",
+      "responsibility": "IT部",
+      "contact": "itsm-support@company.com"
+    }
+  ]
+}

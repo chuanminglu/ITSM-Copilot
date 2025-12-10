@@ -4,6 +4,9 @@ import { System } from './System';
  * 系统推荐结果类型定义
  */
 export interface Recommendation {
+  /** 推荐唯一标识符 */
+  id: string;
+  
   /** 推荐的系统 */
   system: System;
   
@@ -15,6 +18,9 @@ export interface Recommendation {
   
   /** 推荐理由（可选） */
   reason?: string;
+  
+  /** 推荐时间戳（可选） */
+  timestamp?: number;
 }
 
 /**

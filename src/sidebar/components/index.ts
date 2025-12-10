@@ -6,3 +6,4 @@
 
 export { SystemSearchInput } from './SystemSearchInput';
 export { SystemResultList } from './SystemResultList';
+export { SystemSearchPanel } from './SystemSearchPanel';

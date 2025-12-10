@@ -23,10 +23,12 @@ const testSystem: System = {
 
 // 测试Recommendation类型
 const testRecommendation: Recommendation = {
+  id: 'rec-001',
   system: testSystem,
   confidence: 0.92,
   source: 'ai',
   reason: '关键词匹配度高',
+  timestamp: Date.now(),
 };
 
 // 测试ConfidenceFeedback类型

@@ -28,6 +28,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.5",
     "@tailwindcss/postcss": "^4.1.17",
     "@types/chrome": "^0.0.254",
     "@types/lodash.debounce": "^4.0.9",

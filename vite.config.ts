@@ -5,6 +5,7 @@ import { resolve } from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: './', // 使用相对路径，Chrome扩展需要
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

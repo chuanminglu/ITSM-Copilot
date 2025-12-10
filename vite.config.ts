@@ -15,6 +15,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         sidebar: resolve(__dirname, 'sidebar.html'),
+        example: resolve(__dirname, 'example.html'), // 添加TodoList示例页面
         background: resolve(__dirname, 'src/background/index.ts'),
         content: resolve(__dirname, 'src/content/index.ts'),
       },
